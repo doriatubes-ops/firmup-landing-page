@@ -102,7 +102,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [
       // Meta Pixel Code
-      {
+     {
+        // Meta Pixel Code
         children: `!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -112,10 +113,114 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '${META_PIXEL_ID}');
-fbq('track', 'PageView');`,
+fbq('track', 'PageView');`
       },
-    ],
-  }),
+      {
+        // Captura e repasse de UTMs / Parâmetros para Braip e domínio próprio
+        children: `(function () {
+  var KEYS = [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "src",
+    "sck",
+    "fbclid",
+    "gclid",
+    "ttclid",
+    "wbraid",
+    "gbraid",
+    "_fbp",
+    "_fbc"
+  ];
+
+  function getParams() {
+    var p = new URLSearchParams(window.location.search);
+    var out = {};
+    KEYS.forEach(function(k) {
+      var v = p.get(k);
+      if (v && String(v).trim()) {
+        out[k] = String(v).trim();
+      }
+    });
+    return out;
+  }
+
+  function loadSaved() {
+    try {
+      return JSON.parse(localStorage.getItem("saved_utms") || "{}");
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function save(obj) {
+    try {
+      localStorage.setItem("saved_utms", JSON.stringify(obj));
+    } catch(e) {}
+  }
+
+  function addUtmsToLinks() {
+    var saved = loadSaved();
+    if (!Object.keys(saved).length) return;
+
+    var CHECKOUT_MATCH = [
+      "pay.braip.co",
+      "pay.braip.com",
+      "ev.braip.com",
+      "ev.braip.co",
+      "braip.co",
+      "braip.com"
+    ];
+
+    var currentDomain = window.location.hostname;
+    var links = document.querySelectorAll("a[href]");
+
+    links.forEach(function(a) {
+      var href = a.getAttribute("href");
+      if (!href || href.startsWith("#") || href.startsWith("javascript:")) return;
+
+      try {
+        var url = new URL(href, window.location.origin);
+        var isBraip = CHECKOUT_MATCH.some(function(domain) {
+          return url.hostname === domain || url.hostname.endsWith("." + domain);
+        });
+        var isOwnSite = url.hostname === currentDomain;
+
+        if (isBraip || isOwnSite) {
+          KEYS.forEach(function(k) {
+            if (!url.searchParams.get(k) && saved[k]) {
+              url.searchParams.set(k, saved[k]);
+            }
+          });
+          a.setAttribute("href", url.toString());
+        }
+      } catch(e) {}
+    });
+  }
+
+  var current = getParams();
+  var saved = loadSaved();
+  var merged = Object.assign({}, saved, current);
+  save(merged);
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", addUtmsToLinks);
+  } else {
+    addUtmsToLinks();
+  }
+
+  var mo = new MutationObserver(function() {
+    addUtmsToLinks();
+  });
+
+  mo.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+})();`
+      }
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
