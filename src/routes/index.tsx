@@ -1131,7 +1131,7 @@ function FirmupLanding() {
             <span>Instagram</span>
           </a>
           <a
-            href="https://www.tiktok.com/@skincaredeimpacto"
+            href="https://www.tiktok.com/@br_kbeauty"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok @skincaredeimpacto"
