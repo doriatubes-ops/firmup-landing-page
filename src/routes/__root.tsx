@@ -221,6 +221,8 @@ fbq('track', 'PageView');`
   });
 })();`
       }
+      ],
+    }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
