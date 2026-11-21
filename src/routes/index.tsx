@@ -1112,7 +1112,7 @@ function FirmupLanding() {
         </p>
         <div className="footer-socials" aria-label="Redes sociais">
           <a
-            href="https://www.instagram.com/skincaredeimpacto/"
+            href="https://www.instagram.com/kbeautybr_oficial/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram @skincaredeimpacto"
