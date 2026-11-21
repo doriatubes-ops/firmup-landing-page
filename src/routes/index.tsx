@@ -23,7 +23,7 @@ import {
   X,
 } from "lucide-react";
 
-const WHATSAPP_URL = `https://wa.me/5519978042382?text=${encodeURIComponent(
+const WHATSAPP_URL = `https://wa.me/5543988267199?text=${encodeURIComponent(
   "Olá gostaria de saber mais sobre *FirmUP Lifiting Instantâneo*, vi sua LADINGPAGE a AMEI o produto!",
 )}`;
 
