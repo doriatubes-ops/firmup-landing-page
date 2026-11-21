@@ -66,10 +66,10 @@ export const Route = createFileRoute("/")({
 });
 
 const checkoutLinks = {
-  one: "https://pay.braip.co/ref?pl=plapzjkw&ck=che4z80d&af=afi11loeg4",
-  three: "https://pay.braip.co/ref?pl=plamnjkj&ck=che4z80d&af=afi11loeg4",
-  five: "https://pay.braip.co/ref?pl=pla98vo2&ck=che4z80d&af=afi11loeg4",
-  twelve: "https://pay.braip.co/ref?pl=pla89lom&ck=che4z80d&af=afi11loeg4",
+  one: "https://pay.braip.co/campanhas/cpa/cam2j25g1",
+  three: "https://pay.braip.co/campanhas/cpa/camzv48rx",
+  five: "https://pay.braip.co/campanhas/cpa/camdmokl8",
+  twelve: "https://pay.braip.co/campanhas/cpa/cam692n1m",
 };
 
 const timeline = [
